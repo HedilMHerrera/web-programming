@@ -1,0 +1,56 @@
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.*
+
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build output
+dist/
+build/
+
+# Coverage
+coverage/
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Debug
+.eslintcache
+
+# Test
+.nyc_output/
+.jest/
+
+# Editor directories and files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Operating system files
+Desktop.ini
+
+# Docker
+docker-compose.override.yml
+
+# Optional npm cache
+.npm/
+
+# Misc
+.history/
