@@ -23,4 +23,17 @@ export default defineConfig([
       quotes: ['error', 'single'],
     },
   },
+  
+  {
+    files: ['**/*.test.js'],
+    env: {
+      jest: true,
+      node: true,
+    },
+    languageOptions: {
+      globals: {
+        ...globals.jest,
+      },
+    },
+  },
 ]);
