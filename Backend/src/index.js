@@ -11,4 +11,6 @@ app.use(morgan('dev'));
 
 app.get('/', (req, res) => res.json({ success: true, msg: 'API viva' }));
 
+app.use('/quest', require('./routes/quest'));
+
 module.exports = app;
