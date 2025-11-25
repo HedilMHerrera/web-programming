@@ -4,6 +4,7 @@ const router = express.Router();
 const difficultyCrtl = require('../controllers/difficultyController');
 const ageRangeCrtl = require('../controllers/ageRangeController');
 const categoryCrtl = require('../controllers/categoryController');
+const subcategoryCtrl = require('../controllers/subcategoryController');
 
 router.get('/difficulties', difficultyCrtl.list);
 router.get('/difficulties/:id', difficultyCrtl.get);
@@ -22,5 +23,12 @@ router.get('/categories/:id', categoryCrtl.get);
 router.post('/categories', categoryCrtl.create);
 router.put('/categories/:id', categoryCrtl.update);
 router.delete('/categories/:id', categoryCrtl.remove);
+
+router.get('/subcategories', subcategoryCtrl.list);
+router.get('/subcategories/:id', subcategoryCtrl.get);
+router.post('/subcategories', subcategoryCtrl.create);
+router.put('/subcategories/:id', subcategoryCtrl.update);
+router.delete('/subcategories/:id', subcategoryCtrl.remove);
+
 
 module.exports = router;
