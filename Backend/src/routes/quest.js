@@ -13,7 +13,7 @@ router.delete('/difficulties/:id', difficultyCrtl.remove);
 router.get('/ageranges', ageRangeCrtl.list);
 router.get('/ageranges/:id', ageRangeCrtl.get);
 router.post('/ageranges', ageRangeCrtl.create);
-router.put('ageranges/:id', ageRangeCrtl.update);
+router.put('/ageranges/:id', ageRangeCrtl.update);
 router.delete('/ageranges/:id', ageRangeCrtl.remove);
 
 module.exports = router;
