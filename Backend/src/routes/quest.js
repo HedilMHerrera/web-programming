@@ -6,6 +6,13 @@ const ageRangeCrtl = require('../controllers/ageRangeController');
 const categoryCrtl = require('../controllers/categoryController');
 const subcategoryCtrl = require('../controllers/subcategoryController');
 
+router.get('/', (req, res) => {
+    res.json({
+    success: true,
+    msg: 'modulo quest vivoo',
+    });
+});
+
 router.get('/difficulties', difficultyCrtl.list);
 router.get('/difficulties/:id', difficultyCrtl.get);
 router.post('/difficulties', difficultyCrtl.create);
