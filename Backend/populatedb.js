@@ -25,12 +25,12 @@ async function populate() {
         await Difficulty.insertMany(difficulties);
 
         const ageRanges = [
-            { range: '6–8 años', description: 'Niños pequeños, actividades simples.' },
-            { range: '9–12 años', description: 'Niños con habilidades básicas de lectura y lógica.' },
-            { range: '13–17 años', description: 'Adolescentes, contenidos de mayor complejidad.' },
-            { range: '18–25 años', description: 'Jóvenes adultos, temas académicos o profesionales.' },
-            { range: '26–40 años', description: 'Adultos, contenidos avanzados.' },
-            { range: '41+ años', description: 'Adultos mayores, enfoque práctico y claro.' },
+            { minAge: 6, maxAge: 8, description: 'Niños pequeños, actividades simples.' },
+            { minAge: 9, maxAge: 12, description: 'Niños con habilidades básicas de lectura y logica.' },
+            { minAge: 13, maxAge: 17, description: 'Adolescentes, contenidos de mayor complejidad.' },
+            { minAge: 18, maxAge: 25, description: 'Jovenes adultos, temas académicos o profesionales.' },
+            { minAge: 26, maxAge: 40, description: 'Adultos, contenidos avanzados.' },
+            { minAge: 41, maxAge: 120, description: 'Adultos mayores, enfoque práctico y claro.' },
         ];
 
         await AgeRange.insertMany(ageRanges);
@@ -38,7 +38,7 @@ async function populate() {
         console.log('Poblado completado');
 
     } catch (err) {
-        console.error('Error populating DB:', err);
+        console.error('Error al poblar BD:', err);
     } finally {
         await mongoose.disconnect();
     }

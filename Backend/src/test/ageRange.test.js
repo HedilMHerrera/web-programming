@@ -17,7 +17,6 @@ jest.mock('../models/ageRange', () => {
     return MockAgeRange;
 });
 
-const AgeRange = require('../models/ageRange');
 const ageRangeController = require('../controllers/ageRangeController');
 
 function mockRes() {
@@ -32,8 +31,8 @@ describe('Controlador de Rangos de Edad (mockeado)', () => {
 
     test('Deberia devolver la lista de rangos de edad con paginacion', async () => {
         const mockItems = [
-            { _id: '1', range: '6–8 años', description: 'Niños pequeños' },
-            { _id: '2', range: '9–12 años', description: 'Niños' },
+            { _id: '1', minAge: 6, maxAge: 8, description: 'Niños pequeños' },
+            { _id: '2', minAge: 9, maxAge: 12, description: 'Niños' },
         ];
 
         mockCount.mockResolvedValue(2);
@@ -53,7 +52,7 @@ describe('Controlador de Rangos de Edad (mockeado)', () => {
 
     test('Deberia devolver un elemento por ID', async () => {
         const validId = '507f1f77bcf86cd799439011';
-        const mockItem = { _id: validId, range: '13–17 años', description: 'Adolescentes' };
+        const mockItem = { _id: validId, minAge: 13, maxAge: 17, description: 'Adolescentes' };
         mockFindById.mockResolvedValue(mockItem);
 
         const req = { params: { id: validId } };
@@ -66,19 +65,19 @@ describe('Controlador de Rangos de Edad (mockeado)', () => {
     });
 
     test('Deberia crear un nuevo rango de edad correctamente', async () => {
-        const payload = { range: '18–25 años', description: 'Jovenes adultos' };
+        const payload = { minAge: 18, maxAge: 25, description: 'Jovenes adultos' };
         const req = { body: payload };
         const res = mockRes();
 
         await ageRangeController.create(req, res);
 
         expect(res.status).toHaveBeenCalledWith(201);
-        expect(res.json).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ range: '18–25 años' }) }));
+        expect(res.json).toHaveBeenCalledWith(expect.objectContaining({ minAge: 18, maxAge: 25 }));
     });
 
     test('Deberia actualizar un rango de edad existente por ID', async () => {
         const payload = { description: 'Actualizado' };
-        const updated = { _id: '9', range: '26–40 años', description: 'Actualizado' };
+        const updated = { _id: '9', minAge: 26, maxAge: 40, description: 'Actualizado' };
         mockFindByIdAndUpdate.mockResolvedValue(updated);
 
         const req = { params: { id: '507f1f77bcf86cd799439009' }, body: payload };
