@@ -13,4 +13,11 @@ app.get('/', (req, res) => res.json({ success: true, msg: 'API viva' }));
 
 app.use('/quest', require('./routes/quest'));
 
+app.use((req, res) => {
+	return res.status(404).json({ success: false, message: 'Ruta no encontrada' });
+});
+
+const errorHandler = require('./middlewares/errorHandler');
+app.use(errorHandler);
+
 module.exports = app;
