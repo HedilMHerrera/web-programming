@@ -1,23 +1,39 @@
 const AgeRange = require('../models/ageRange');
 
 exports.list = async (req, res, next) => {
-    const page = Math.max(1, parseInt(req.query.page) || 1);
-    const limit = Math.min(100, Math.max(1, parseInt(req.query.limit) || 10));
-    const q = req.query.q;
-
-    const filter = {};
-    if (q) {
-        filter.description = { $regex: q, $options: 'i' };
-    }
-
     try {
+        const page = req.query.page ?? 1;     
+        const limit = req.query.limit ?? 10;  
+        const q = req.query.q;               
+
+        const filter = {};
+        if (q) {
+            filter.description = { $regex: q, $options: 'i' };
+        }
+
         const total = await AgeRange.countDocuments(filter);
+        const pages = Math.ceil(total / limit) || 1;
+
+        if (page > pages) {
+            return res.status(400).json({
+                success: false,
+                message: `La pagina ${page} no existe. Solo hay ${pages} pagina(s)`,
+            });
+        }
+
         const items = await AgeRange.find(filter)
             .sort('minAge')
             .skip((page - 1) * limit)
             .limit(limit);
 
-        res.json({ total, page, limit, pages: Math.ceil(total / limit) || 1, data: items });
+        return res.json({
+            total,
+            page,
+            limit,
+            pages: Math.ceil(total / limit) || 1,
+            data: items,
+        });
+
     } catch (err) {
         return next(err);
     }
