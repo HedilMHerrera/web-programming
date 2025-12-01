@@ -9,6 +9,7 @@ const validate = require('../middlewares/validate');
 const difficultyValidator = require('../middlewares/validators/difficultyValidator');
 const ageRangeValidator = require('../middlewares/validators/ageRangeValidator');
 const listQueryValidator = require('../middlewares/validators/listQueryValidator'); 
+const categoryValidator = require('../middlewares/validators/categoryValidator');
 
 router.get('/', (req, res) => {
     res.json({
@@ -30,10 +31,10 @@ router.put('/ageranges/:id', ageRangeValidator.update, validate, ageRangeCrtl.up
 router.delete('/ageranges/:id', ageRangeValidator.delete, validate, ageRangeCrtl.remove);
 
 router.get('/categories', listQueryValidator, validate, categoryCrtl.list);
-router.get('/categories/:id', categoryCrtl.get);
-router.post('/categories', categoryCrtl.create);
-router.put('/categories/:id', categoryCrtl.update);
-router.delete('/categories/:id', categoryCrtl.remove);
+router.get('/categories/:id',categoryValidator.getById, validate, categoryCrtl.get);
+router.post('/categories',categoryValidator.create, validate, categoryCrtl.create);
+router.put('/categories/:id',categoryValidator.update, validate, categoryCrtl.update);
+router.delete('/categories/:id',categoryValidator.delete, validate, categoryCrtl.remove);
 
 router.get('/subcategories', listQueryValidator, validate, subcategoryCtrl.list);
 router.get('/subcategories/:id', subcategoryCtrl.get);
