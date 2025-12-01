@@ -10,6 +10,7 @@ const difficultyValidator = require('../middlewares/validators/difficultyValidat
 const ageRangeValidator = require('../middlewares/validators/ageRangeValidator');
 const listQueryValidator = require('../middlewares/validators/listQueryValidator'); 
 const categoryValidator = require('../middlewares/validators/categoryValidator');
+const subcategoryValidator = require('../middlewares/validators/subcategoryValidator');
 
 router.get('/', (req, res) => {
     res.json({
@@ -37,10 +38,10 @@ router.put('/categories/:id',categoryValidator.update, validate, categoryCrtl.up
 router.delete('/categories/:id',categoryValidator.delete, validate, categoryCrtl.remove);
 
 router.get('/subcategories', listQueryValidator, validate, subcategoryCtrl.list);
-router.get('/subcategories/:id', subcategoryCtrl.get);
-router.post('/subcategories', subcategoryCtrl.create);
-router.put('/subcategories/:id', subcategoryCtrl.update);
-router.delete('/subcategories/:id', subcategoryCtrl.remove);
+router.get('/subcategories/:id',subcategoryValidator.getById, validate, subcategoryCtrl.get);
+router.post('/subcategories',subcategoryValidator.create, validate, subcategoryCtrl.create);
+router.put('/subcategories/:id',subcategoryValidator.update, validate, subcategoryCtrl.update);
+router.delete('/subcategories/:id',subcategoryValidator.delete, validate, subcategoryCtrl.remove);
 
 
 module.exports = router;
