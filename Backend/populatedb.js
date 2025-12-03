@@ -4,16 +4,22 @@ const mongoose = require('mongoose');
 
 const Difficulty = require('./src/models/difficulty');
 const AgeRange = require('./src/models/ageRange');
+const User = require('./src/models/user');
 
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/quest';
 
 async function populate() {
     await connectDB(MONGO_URI);
     try {
-        await Promise.all([
-            Difficulty.deleteMany({}),
-            AgeRange.deleteMany({}),
-        ]);
+        const force = process.env.SEED_FORCE === 'true' || process.argv.includes('--force');
+
+        if (force) {
+            await Promise.all([
+                Difficulty.deleteMany({}),
+                AgeRange.deleteMany({}),
+                User.deleteMany({}),
+            ]);
+        }
 
         const difficulties = [
             { level: 'Facil', description: 'Requiere conocimientos basicos; se resuelve rapidamente.' },
@@ -34,6 +40,24 @@ async function populate() {
         ];
 
         await AgeRange.insertMany(ageRanges);
+
+        const users = [
+            { name: 'Admin', email: 'admin@example.com', password: 'admin123', roles: ['admin'] },
+            { name: 'Editor', email: 'editor@example.com', password: 'editor123', roles: ['editor'] },
+            { name: 'Gestor', email: 'gestor@example.com', password: 'gestor123', roles: ['gestor'] },
+            { name: 'Estudiante', email: 'estudiante@example.com', password: 'estudiante123', roles: ['estudiante'] },
+        ];
+
+        for (const u of users) {
+            const exists = await User.findOne({ email: u.email });
+            if (!exists) {
+                const user = new User(u);
+                await user.save();
+                console.log('Usuario creado:', u.email);
+            } else {
+                console.log('Usuario ya existe, omitido:', u.email);
+            }
+        }
 
         console.log('Poblado completado');
 

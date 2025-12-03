@@ -1,27 +1,42 @@
 const Category = require('../models/category');
 const mongoose = require('mongoose');
 
-exports.list = async (req, res) => {
-    const page = Math.max(1, parseInt(req.query.page) || 1);
-    const limit = Math.min(100, Math.max(1, parseInt(req.query.limit) || 10));
-    const q = req.query.q;
+exports.list = async (req, res, next) => {
+    try {
+        const page = req.query.page ?? 1;  
+        const limit = req.query.limit ?? 10; 
+        const q = req.query.q;            
 
-    const filter = {};
-    if (q) filter.name = { $regex: q, $options: 'i' }; 
+        const filter = {};
+        if (q) {
+            filter.name = { $regex: q, $options: 'i' };
+        }
 
-    const total = await Category.countDocuments(filter);
-    const items = await Category.find(filter)
-        .sort('name')
-        .skip((page - 1) * limit)
-        .limit(limit);
+        const total = await Category.countDocuments(filter);
+        const pages = Math.ceil(total / limit) || 1;
 
-    res.json({
-        total,
-        page,
-        limit,
-        pages: Math.ceil(total / limit) || 1,
-        data: items,
-    });
+        if (page > pages) {
+            return res.status(400).json({
+                success: false,
+                message: `La pagina ${page} no existe. Solo hay ${pages} pagina(s)`,
+            });
+        }
+
+        const items = await Category.find(filter)
+            .sort('name')
+            .skip((page - 1) * limit)
+            .limit(limit);
+
+        return res.json({
+            total,
+            page,
+            limit,
+            pages: Math.ceil(total / limit) || 1,
+            data: items,
+        });
+    } catch (err) {
+        next(err);
+    }
 };
 
 exports.get = async (req, res) => {
