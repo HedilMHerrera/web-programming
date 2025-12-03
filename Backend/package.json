@@ -7,17 +7,23 @@
     "dev": "nodemon src/server.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "jest --runInBand"
+    "test": "jest --runInBand",
+    "seed": "node populatedb.js",
+    "seed:force": "node populatedb.js --force"
   },
   "author": "HedilMHerrera",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "express-validator": "^7.0.1",
     "helmet": "^8.1.0",
+    "cookie-parser": "^1.4.6",
+  "express-rate-limit": "^6.7.0",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^8.20.0",
     "morgan": "^1.10.1"
   },
