@@ -6,10 +6,8 @@ const Difficulty = require('./src/models/difficulty');
 const AgeRange = require('./src/models/ageRange');
 const User = require('./src/models/user');
 
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/quest';
-
 async function populate() {
-    await connectDB(MONGO_URI);
+    await connectDB();
     try {
         const force = process.env.SEED_FORCE === 'true' || process.argv.includes('--force');
 

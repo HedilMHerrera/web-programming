@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 mongoose.set('strictQuery', false);
 
-async function connectDB(uri) {
-    const mongoUri = uri || process.env.MONGO_URI || process.env.DATABASE_URL;
-    if (!mongoUri) throw new Error('MONGO_URI o DATABASE_URL no esta definida');
+async function connectDB() {
+    const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/quest';
+    if (!mongoUri) throw new Error('MONGO_URI no está definida');
     try {
         await mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 5000 });
         console.log('MongoDB conectado');
