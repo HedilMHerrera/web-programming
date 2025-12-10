@@ -7,7 +7,9 @@
     "dev": "nodemon src/server.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "jest --runInBand"
+    "test": "jest --runInBand",
+    "generate-cert": "sh ./scripts/generate-cert.sh",
+    "dev:https": "SSL=true nodemon src/server.js"
   },
   "author": "HedilMHerrera",
   "license": "ISC",
@@ -19,7 +21,8 @@
     "express-validator": "^7.0.1",
     "helmet": "^8.1.0",
     "mongoose": "^8.20.0",
-    "morgan": "^1.10.1"
+    "morgan": "^1.10.1",
+    "spdy": "^4.0.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
