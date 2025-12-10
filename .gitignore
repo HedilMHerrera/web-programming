@@ -5,6 +5,12 @@ Thumbs.db
 .env
 .env.*
 
+# SSL certificates
+*.key
+*.cert
+cert/server.key
+cert/server.cert
+
 # Node modules
 node_modules/
 
