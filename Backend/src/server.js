@@ -27,7 +27,7 @@ function createServer() {
 
 const server = createServer();
 
-connectDB(MONGO_URI)
+connectDB()
     .then(() => {
     server.listen(PORT, () => {
     console.log(
