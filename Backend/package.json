@@ -9,7 +9,7 @@
     "lint:fix": "eslint . --fix",
     "test": "jest --runInBand",
     "generate-cert": "sh ./scripts/generate-cert.sh",
-    "dev:https": "SSL=true nodemon src/server.js"
+    "dev:https": "SSL=true nodemon src/server.js",
     "seed": "node populatedb.js",
     "seed:force": "node populatedb.js --force"
   },
