@@ -7,9 +7,7 @@ const spdy = require('spdy');
 const app = require('./index');
 const connectDB = require('./config/db');
 
-
 const PORT = process.env.PORT || 4000;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/quest';
 
 const useSSL = process.env.SSL === 'true';
 
