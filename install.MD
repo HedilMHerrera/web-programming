@@ -21,19 +21,22 @@ Situaute en la carpeta donde deseas clonar el repositorio y abre git Bash
 ```bash
 git clone https://github.com/HedilMHerrera/web-programming.git
 ```
-Para abrir directamente visual estudio code desde el git bash:
-```bash
-code .
-```
 
 ## 2) Instalar dependencias
 Situate en el directorio del proyecto:
-cd Backend
+```
+cd ./web-programming/Backend/
+```
+ejecuta el siguiente comando para instalar las dependencias
 ```bash
 npm install
 ```
 
 ## 3) Configurar variables de entorno
+PARA PROBAR DIRECTAMENTE CON NUESTRA BASE DE DATOS LE COMPARTIMOS EL ARCHIVO .env EN EL SIGUIENTE DOCUMENTO GOOGLE DOCS: https://docs.google.com/document/d/1yD7jShwZoYPURjyREo3Q5KYMHTzqefux0fwBksx77PM/edit?usp=sharing  CON PERMISO DE ACCESO PARA SU CORREO:
+v.costas@umss.edu, vladimircostas.j@fcyt.umss.edu.bo
+
+En caso de utilizar su propia base de datos
 En el directorio: cd Backend crea el archvio .env
 cd Backend:
 ```bash
@@ -52,6 +55,8 @@ JWT_ACCESS_SECRET=llave_de_acceso_secreto
 # Seeder behavior
 SEED_FORCE=false
 ```
+Para obtener su propio MONGO_URI [Configuration MongoDB →](./configuration_mongoDB.md)
+
 Para generar la llave_de_acceso_secreto ejecuta el siguiente comando:
 cd Backend:
 ```bash
@@ -62,12 +67,16 @@ ejemplo de llave generada: GxZtdFhGJQHRRob0S5rJ/iSSwffujFM5ryf/IVD03JPAgSnMPjnYT
 copia esta llave en variables de entorno .env de esta forma:
 JWT_ACCESS_SECRET=GxZtdFhGJQHRRob0S5rJ/iSSwffujFM5ryf/IVD03JPAgSnMPjnYT1P+FSgoXcve
 
-## 4) Preparar la base de datos
 
-El proyecto tiene datos de prueba definidos, ejecuta el siguiente script para poblar tu base de datos:
+
+## 4) Preparar la base de datos
+En caso de utilizar nuestra base de datos que se le compartio en el documento google docs, ya no sera necesario poblar nuevamente la base de datos.
+
+El proyecto tiene datos de prueba definidos, en caso de usar su propia base de datos, ejecuta el siguiente script para poblar su base de datos:
 ```bash
 node populatedb.js
 ```
+
 
 ## 5) Ejecutar en modo desarrollo
 Normalmente hay un script `dev`:
@@ -91,8 +100,11 @@ http://localhost:4000
 
 ## 9) Configuracion para https y http2
 Situate en la carpeta cert del Backend:
+```bash
+cd cert
+```
 crea los siguientes archivos con los nombres:
-cd Backend/cert:
+
 
 - server.cert
 ```bash
@@ -105,6 +117,9 @@ touch server.key
 ## 10) Generar Certificado y Llave privada
 
 Vuelve a la carpeta Backend
+```bash
+ cd ..
+```
 ejecuta el siguiente comando:
 
 ```bash
@@ -114,14 +129,17 @@ revisa los archivos server.cert y server.key y verifica que realmente se generar
 ejemplo:
 
 server.cert:
+```
 -----BEGIN CERTIFICATE-----
 aqui el certificado
 -----END CERTIFICATE-----
-
+```
 server.key:
+```
 -----BEGIN PRIVATE KEY-----
 aqui la llave
 -----END PRIVATE KEY-----
+```
 
 ## 11) Levantar el servidor https y http2
 
@@ -143,6 +161,13 @@ Observa la consola:
 Servidor corriendo en https://localhost:4000
 Protocolo: HTTP/2 (spdy)
 
+
+```
+(node:XXXX) [DEP0111] DeprecationWarning: Access to process.binding('http_parser') is deprecated.
+```
+En caso de que salga esta advertencia se debe a dependencias internas que utilizan APIs obsoletas de Node.js.
+
+Sin embargo no afecta el funcionamiento de la aplicación ni la conexión a la base de datos.
 
 
 ## 10) Solución de problemas comunes
