@@ -5,7 +5,8 @@ const mongoose = require('mongoose');
 const Difficulty = require('./src/models/difficulty');
 const AgeRange = require('./src/models/ageRange');
 const User = require('./src/models/user');
-
+const Category = require('./src/models/category');
+const Subcategory = require('./src/models/subcategory');
 async function populate() {
     await connectDB();
     try {
@@ -16,6 +17,8 @@ async function populate() {
                 Difficulty.deleteMany({}),
                 AgeRange.deleteMany({}),
                 User.deleteMany({}),
+                Category.deleteMany({}),
+                Subcategory.deleteMany({}),
             ]);
         }
 
@@ -38,6 +41,42 @@ async function populate() {
         ];
 
         await AgeRange.insertMany(ageRanges);
+
+        const categories = [
+            { name: 'Matematicas', description: 'Estudio de relaciones numéricas, razonamiento cuantitativo, álgebra, geometría, medidas, estadística y resolución de problemas.' },
+            { name: 'Tecnologia e Informatica', description: 'Estudio de herramientas digitales, computación, ofimática, programación, seguridad digital y pensamiento computacional.' },
+            { name: 'Logica', description: 'Problemas de razonamiento lógico, patrones, secuencias, series, pensamiento crítico, análisis y deducción.'},
+            { name: 'Lenguaje y comunicacion', description: 'Estudio del lenguaje, gramática, ortografía, redacción, comprensión lectora y análisis literario.' },
+            { name: 'Ciencias Sociales', description: 'Incluye historia, geografía, ciudadanía, cultura, economía básica y el análisis del entorno social y humano.' },
+            { name: 'Ciencias Naturales', description: 'Estudio de biología, química, física, ecología y el método científico.' },
+            { name: 'Ciencias Graficas', description: 'Comprende biología, física, química, astronomía, ecología y el estudio de fenómenos naturales mediante el método científico.' },
+        ];
+
+        await Category.insertMany(categories);
+
+
+        const categoryDocs = await Category.find({});
+        const categoryMap = {};
+        for (const c of categoryDocs) {
+            categoryMap[c.name] = c._id;
+        }
+
+        const subcategories = [
+            {  name: 'Acertijos y Problemas Logicos', description: 'Resoluciooooon de problemas mediante razonamiento estructurado, pistas, comparaciones y deducciones.', categoryId: categoryMap['Logica'],},
+            {  name: 'Analogias', description: 'Identificacion de relaciones entre pares de conceptos para completar analogias verbales o visuales.', categoryId: categoryMap['Logica'], },
+            {  name: 'Aritmetica',description: 'Operaciones fundamentales con numeros naturales, enteros, decimales y fracciones.', categoryId: categoryMap['Matematicas'], },
+            {  name: 'Algebra', description: 'Manipulacion de expresiones algebraicas, ecuaciones e inecuaciones basicas.', categoryId: categoryMap['Matematicas'],},
+            {  name: 'Calculo', description: 'Conceptos iniciales de limites, tasas de cambio y derivadas sencillas.', categoryId: categoryMap['Matematicas'],},
+            {  name: 'Analisis de datos', description: 'Interpretacion de datos en graficos y tablas, identificando tendencias y comparaciones.', categoryId: categoryMap['Tecnologia e Informatica'], },
+            {  name: 'Ciberseguridad', description: 'Conceptos basicos sobre amenazas digitales y buenas practicas de seguridad.', categoryId: categoryMap['Tecnologia e Informatica'], },
+            {  name: 'Biologia', description: 'Estudio de los seres vivos, sus caracteristicas y procesos basicos.', categoryId: categoryMap['Ciencias Naturales'], },
+            {  name: 'Astronomia', description: 'Estudio del sistema solar, estrellas, galaxias y fenomenos astronomicos.', categoryId: categoryMap['Ciencias Naturales'], },
+            {  name: 'Anatomia', description: 'Sistemas del cuerpo, salud, nutricion y funciones vitales.', categoryId: categoryMap['Ciencias Naturales'], },
+        ].filter(s => s.categoryId);
+
+        await Subcategory.insertMany(subcategories);
+
+
 
         const users = [
             { name: 'Admin', email: 'admin@example.com', password: 'admin123', roles: ['admin'] },
